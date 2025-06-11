@@ -1,0 +1,40 @@
+module RegALU(Clk, ALU_s0, RF_W_Addr, RF_W_en, RF_Ra_Addr, RF_Rb_Addr, ALU_result);
+
+	input Clk, RF_W_en;
+	input [3:0] RF_W_Addr, RF_Ra_Addr, RF_Rb_Addr;
+	input [2:0] ALU_s0;
+	output logic [15:0] ALU_result;
+	logic [15:0] Ra_data, Rb_data, RF_W_data;
+
+	assign ALU_result = RF_W_data;
+	
+	//regFile(clk, wren, wrAddr, wrData, rdAddrA, rdDataA, rdAddrB, rdDataB )
+	regFile regFile_inst(Clk, RF_W_en, RF_W_Addr, RF_Ra_Addr, RF_Rb_Addr, RF_W_data, Ra_data, Rb_data);
+	//ALU( A, B, Sel, Q );
+	ALU ALU_inst(Ra_data, Rb_data, ALU_s0, RF_W_data);
+endmodule 
+
+module RegALU_tb();
+    logic Clk, RF_W_en;
+    logic [3:0] RF_W_Addr, RF_Ra_Addr, RF_Rb_Addr;
+    logic [2:0] ALU_s0;
+    logic [15:0] ALU_result;
+    
+    RegALU DUT(Clk, ALU_s0, RF_W_Addr, RF_W_en, RF_Ra_Addr, RF_Rb_Addr, ALU_result);
+    
+    
+    always begin 
+    Clk=1'b0; #10;
+    Clk=1'b1; #10;
+    end
+    
+    initial begin
+    RF_W_Addr = 4'd2; RF_W_en = 1'b1; RF_Ra_Addr = 4'd0; RF_Rb_Addr = 4'd1; DUT.Ra_Data = 16'd2; DUT.Rb_Data = 16'd3; 25;
+    ALU_s0 = 3'd0; #20; assert(ALU_result==16'd0) begin
+    $display("ALU Result is %d", ALU_result); end
+    ALU_s0 = 3'd1; #20; assert(ALU_result == DUT.Ra_Data+DUT.Rb_Data) begin
+    $display("ALU Result is %d", ALU_result); end
+    
+    end
+
+endmodule

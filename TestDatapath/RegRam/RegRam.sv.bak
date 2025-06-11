@@ -1,0 +1,80 @@
+/*
+ * TCES 330 Spring 2025
+ * @author Ahmed Aljewad & Logan Black
+ * @version 28 MAY 2025
+ * Module to test RAM + Register File
+ */
+
+module RegRam(
+        Clk, 
+        D_Addr, 
+        D_wr, 
+        RF_W_Addr, 
+        RF_W_en, 
+        RF_Ra_Addr, 
+        RF_Rb_Addr, 
+        Ra_data, 
+        Rb_data);
+
+	input Clk;
+	input D_wr;
+	input RF_W_en;
+	input [3:0] RF_W_Addr;
+	input [3:0] RF_Ra_Addr;
+	input [3:0] RF_Rb_Addr;
+	input [7:0] D_Addr;
+	output [15:0] Ra_data;
+	output [15:0] Rb_data;
+
+	logic [15:0] Din;
+	logic [15:0] Dout;
+	
+	// RAM
+	RAM RAM_inst(
+	        .address(D_Addr), 
+	        .clock(Clk), 
+	        .data(Din), 
+	        .wren(D_wr), 
+	        .q(Dout)
+	        );
+	
+	//regFile(clk, wren, wrAddr, wrData, rdAddrA, rdDataA, rdAddrB, rdDataB )
+	RegisterFile regFile_inst(
+	                .Clk(Clk), 
+	                .Wren(RF_W_en), 
+	                .WrAddr(RF_W_Addr), 
+	                .WrData(Dout), 
+	                .RdAddrA(RF_Ra_Addr), 
+	                .RdAddrB(RF_Rb_Addr), 
+	                .RdDataA(Ra_data), 
+	                .RdDataB(Rb_data)
+	                );
+	
+endmodule 
+
+module RegRam_tb();
+    logic Clk, D_wr, RF_W_en;
+    logic [3:0] RF_W_Addr, RF_Ra_Addr, RF_Rb_Addr;
+    logic [7:0] D_Addr; 
+    logic [15:0] Ra_data, Rb_data;
+    logic [15:0] SumData;
+
+    RegRam DUT(Clk, D_Addr, D_wr, RF_W_Addr, RF_W_en, RF_Ra_Addr, RF_Rb_Addr, Ra_data, Rb_data);
+    
+    always begin 
+    Clk=1'b0; #10;
+    Clk=1'b1; #10;
+    end 
+    
+    initial begin
+    D_Addr = 8'd5; RF_W_Addr = 4'd0; D_wr = 1'b1; RF_Ra_Addr = 4'd0;
+    @(posedge Clk) $display("reading RAM %d", DUT.Dout);
+    #21; D_Addr = 8'd41; RF_W_Addr = 4'd1; #41;
+    RF_RA_Addr = 4'd0; RF_Rb_Addr = 4'd1; SumData = RF_RA_Addr+RF_Rb_Addr; 
+    $display("RF[0]+RF[1] = %d", SumData);
+    
+    $stop
+    
+    end
+
+endmodule

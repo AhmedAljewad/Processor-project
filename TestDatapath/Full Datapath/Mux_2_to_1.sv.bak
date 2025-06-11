@@ -1,0 +1,48 @@
+/*
+ * TCES 330 Spring 2025
+ * Project Files 2 to 1 mux
+ * @author Logan Black
+ * @version 21 MAY 2025
+ * 2 to 1 mux built using case statement
+ */
+`timescale 1 ps / 1 ps
+module Mux_2_to_1(S, A, B, M);
+
+	// input & output
+	input S, A, B;
+	output logic M;
+
+	// assigns output M to A or B based on select signal case statement
+	always_comb begin
+		case (S)
+			1'b0: M = A;
+			1'b1: M = B;
+		endcase
+	end
+
+endmodule
+
+// test bench
+module Mux_2_to_1_tb();
+
+	// input & output
+	logic s, a, b;
+	logic m;
+
+	// DUT initialization
+	Mux_2_to_1 DUT(s, a, b, m);
+
+	// testing all variations of input and output
+	initial begin
+		s = 1'b0; a = 1'b0; b = 1'b0; #10;
+							  b = 1'b1; #10;
+					 a = 1'b1; b = 1'b0; #10;
+								  b = 1'b1; #10;
+		s = 1'b1; a = 1'b0; b = 1'b0; #10;
+								  b = 1'b1; #10;
+					 a = 1'b1; b = 1'b0; #10;
+								  b = 1'b1; #10;
+	end
+	
+endmodule
+ 

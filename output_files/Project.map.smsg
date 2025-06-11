@@ -1,0 +1,2 @@
+Info (10281): Verilog HDL Declaration information at ControlUnit.sv(40): object "RF_RA_addr" differs only in case from object "RF_Ra_addr" in the same scope File: C:/Users/ahmed/Documents/Tces 330/Project/Project/ControlUnit.sv Line: 40
+Info (10281): Verilog HDL Declaration information at ControlUnit.sv(41): object "RF_RB_addr" differs only in case from object "RF_Rb_addr" in the same scope File: C:/Users/ahmed/Documents/Tces 330/Project/Project/ControlUnit.sv Line: 41

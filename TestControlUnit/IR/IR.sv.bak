@@ -1,0 +1,19 @@
+/*
+ * TCES 330 Spring 2025
+ * Project Files IR
+ * @author Logan Black & Ahmed Aljewad
+ * @version 30 MAY 2025
+ * This module functions as an instruction register for the control unit
+ */
+ 
+ `timescale 1 ps / 1 ps
+ 
+ module IR();
+ 
+ endmodule
+ 
+ // testbench
+ module IR_tb();
+ 
+ endmodule
+ 
