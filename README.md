@@ -63,8 +63,7 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 ![Detailed Processor Block Diagram](https://github.com/user-attachments/assets/d12006e1-3b33-4bb7-9563-1707fff4ea2a)
 
 ## Project Structure
-/processor-project
-│
+processor-project/
 ├── processor/                      # Final processor and support modules
 │   ├── alu.sv
 │   ├── buttonsync.sv
@@ -84,7 +83,6 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 │   ├── registerfile.sv
 │   ├── rom.v
 │   └── testprocessor.sv           # Standalone testbench for full processor
-│
 ├── TestControlUnit/               # Unit testing of control-related modules
 │   ├── Full Control Unit/         # Full control unit and testbench
 │   │   └── controlunit.sv         # (contains control + testbench)
@@ -94,17 +92,15 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 │   │   └── IR.sv
 │   └── PC/                        # Program Counter + TB
 │       └── PC.sv
-│
-├── TestDatapath/                  # Unit testing of datapath components
-│   ├── Full Datapath/             # Full datapath test
-│   │   └── datapath.sv
-│   ├── RegALU/                    # ALU + Register File testing
-│   │   └── RegAlU.sv              # Contains both modules + TB
-│   ├── RegisterFile/              # Register File testing
-│   │   └── RegisterFile.sv
-│   └── RegRAM/                    # RF + RAM test
-│       └── RegRam.sv
-
+└── TestDatapath/                  # Unit testing of datapath components
+    ├── Full Datapath/             # Full datapath test
+    │   └── datapath.sv
+    ├── RegALU/                    # ALU + Register File testing
+    │   └── RegAlU.sv              # Contains both modules + TB
+    ├── RegisterFile/              # Register File testing
+    │   └── RegisterFile.sv
+    └── RegRAM/                    # RF + RAM test
+        └── RegRam.sv
 ## Getting Started
 
 ### Prerequisites
