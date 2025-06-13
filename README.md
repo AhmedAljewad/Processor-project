@@ -66,6 +66,7 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 processor-project/
 ├── processor/ # Final processor and support modules
 │ ├── alu.sv
+
 │ ├── buttonsync.sv
 │ ├── controlunit.sv
 │ ├── datapath.sv
