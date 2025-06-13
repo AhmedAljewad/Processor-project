@@ -107,10 +107,10 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 ## Getting Started
 
 ### Prerequisites
-##Software: For validation and Synthesis
+#### Software: For validation and Synthesis
 - **Quartus Prime** for FPGA synthesis and programming
 - **ModelSim** for simulation and verification
-##Hardware
+#### Hardware
 - **Intel Cyclone DE2-115 Dev Kit** For testing and development
 
 ### Compilation and Simulation
