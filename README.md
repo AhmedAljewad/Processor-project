@@ -6,6 +6,14 @@
 
 This project implements a simple six-instruction programmable processor using SystemVerilog. The design is meant for the DE2 FPGA development board. It features a top-level processor module that integrates a Control Unit and Datapath, designed using a top-down approach and implemented bottom-up.
 
+## Architecture Diagrams
+
+**Fig 1: Processor Module Hierarchy (Top-down design)**
+![Processor Module Hierarchy](https://github.com/user-attachments/assets/77f393b8-db34-4324-ac9b-02fc0bfa00d1)
+
+**Fig 2: Detailed Processor Block Diagram**
+![Detailed Processor Block Diagram](https://github.com/user-attachments/assets/d12006e1-3b33-4bb7-9563-1707fff4ea2a)
+
 ## Processor Architecture
 
 ### Top-Level Modules
@@ -54,15 +62,6 @@ The Controller outputs signals such as `RF_W_addr`, `RF_W_en`, `RF_Ra_addr`, `RF
 
 This modular separation and clear control flow enable easy debugging, maintenance, and extension of the processor design.
 
-### Architecture Diagrams
-
-**Fig 1: Processor Module Hierarchy (Top-down design)**
-![Processor Module Hierarchy](https://github.com/user-attachments/assets/77f393b8-db34-4324-ac9b-02fc0bfa00d1)
-
-**Fig 2: Detailed Processor Block Diagram**
-![Detailed Processor Block Diagram](https://github.com/user-attachments/assets/d12006e1-3b33-4bb7-9563-1707fff4ea2a)
-
-## Project Structure
 ## Project Structure
 
 - **processor/** - Final processor and support modules
@@ -104,6 +103,7 @@ This modular separation and clear control flow enable easy debugging, maintenanc
     - RegisterFile.sv
   - **RegRAM/** - RF + RAM test
     - RegRam.sv
+
 ## Getting Started
 
 ### Prerequisites
