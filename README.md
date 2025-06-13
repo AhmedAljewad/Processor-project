@@ -57,7 +57,7 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 ### Architecture Diagrams
 
 **Fig 1: Processor Module Hierarchy (Top-down design)**
-<img width="494" alt="image" src="https://github.com/user-attachments/assets/77f393b8-db34-4324-ac9b-02fc0bfa00d1" />
+![Processor Module Hierarchy](https://github.com/user-attachments/assets/77f393b8-db34-4324-ac9b-02fc0bfa00d1)
 
 **Fig 2: Detailed Processor Block Diagram**
 ![Detailed Processor Block Diagram](https://github.com/user-attachments/assets/d12006e1-3b33-4bb7-9563-1707fff4ea2a)
