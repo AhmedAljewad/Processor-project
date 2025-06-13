@@ -8,20 +8,24 @@
  
  `timescale 1 ps / 1 ps
  
-module FSM(Clk, reset, IR, PC_up, PC_clr, IR_ld, D_Addr, D_wr, RF_s, RF_W_addr, 
-RF_W_en, RF_Ra_addr, RF_Rb_addr, ALU_s0, State_Out);
+module FSM(Clk, resetN, IR, PC_up, PC_clr, IR_ld, D_Addr, D_wr, RF_s, RF_W_addr, 
+RF_W_en, RF_Ra_addr, RF_Rb_addr, ALU_s0, OutState, NextState);
 
     // Inputs
-	input Clk, reset;
+	input Clk, resetN;
 	input [15:0] IR;
 	// Outputs
 	output logic PC_up, PC_clr, IR_ld, D_wr, RF_s, RF_W_en;
 	output logic [3:0] RF_W_addr, RF_Ra_addr, RF_Rb_addr;
 	output logic [2:0] ALU_s0;
 	output logic [7:0] D_Addr;
-	output logic [3:0] State_Out;
+	output logic [3:0] OutState, NextState;
     // States
 	logic [3:0] Current_State, Next_State;
+	
+	// Show states as outputs
+	assign OutState = Current_State;
+	assign NextState = Next_State;
 
     // State names, 4 bits for 10 states
 	localparam Init = 4'h0,
@@ -140,28 +144,28 @@ RF_W_en, RF_Ra_addr, RF_Rb_addr, ALU_s0, State_Out);
 	
     // Flip-flop logic to update current state
 	always_ff @(posedge Clk) begin
-		if(reset) Current_State <= Init; // On reset go to Init
+		if(!resetN) Current_State <= Init; // On reset go to Init
 		else Current_State <= Next_State; // Go to next state
 	end
 	
-	// Show current state as output
-	assign State_Out = Current_State;
+
 
 endmodule 
 
 // Testbench
 module FSM_tb();
-	logic Clk, reset;
+	logic Clk, resetN;
 	logic [15:0] IR;
 	logic PC_up, PC_clr, IR_ld, D_wr, RF_s, RF_W_en;
 	logic [3:0] RF_W_addr, RF_Ra_addr, RF_Rb_addr;
 	logic [2:0] ALU_s0;
 	logic [7:0] D_Addr;
-	logic [3:0] State_Out;
+	logic [3:0] OutState;
+	logic [3:0] NextState;
 
     // Testbench signals
-	FSM DUT(Clk, reset, IR, PC_up, PC_clr, IR_ld, D_Addr, D_wr, RF_s, RF_W_addr, 
-	RF_W_en, RF_Ra_addr, RF_Rb_addr, ALU_s0, State_Out);
+	FSM DUT(Clk, resetN, IR, PC_up, PC_clr, IR_ld, D_Addr, D_wr, RF_s, RF_W_addr, 
+	RF_W_en, RF_Ra_addr, RF_Rb_addr, ALU_s0, OutState, NextState);
 
     // 50 MHz clock
 	always begin 
@@ -170,19 +174,19 @@ module FSM_tb();
 	end
 
 	initial begin
-	reset = 1'b1; #20;
-	reset = 1'b0; #20;
+	resetN = 1'b0; #20;
+	resetN = 1'b1; #20;
 
 	// Test Store
-	IR = 16'h1234; wait(State_Out == 4'h7); #20;
+	IR = 16'h1234; wait(OutState == 4'h7); #20;
 	assert(D_Addr == IR[7:0] && D_wr == 1'b1 && RF_Ra_addr == IR[11:8]) begin
-    $display("Store is successful, D_Addr = %b", D_Addr);
+    $display("STORE is successful: D_Addr = %b, RF_Ra_addr = %b", D_Addr, RF_Ra_addr);
 	end else begin
-    $display("Store FAILED");
+    $display("STORE FAILED");
 	end
 
 	// Test ADD
-	IR = 16'h3ABC; wait(State_Out == 4'h5); #20;
+	IR = 16'h3ABC; wait(OutState == 4'h5); #20;
 	assert(ALU_s0 == 3'd1 && RF_W_en == 1'b1 && RF_W_addr == IR[3:0] && RF_Ra_addr == IR[11:8] && RF_Rb_addr == IR[7:4]) begin
     $display("ADD is successful, RF_W_addr = %b, RF_Ra_addr = %b, RF_Rb_addr = %b", RF_W_addr, RF_Ra_addr, RF_Rb_addr);
 	end else begin
@@ -190,7 +194,7 @@ module FSM_tb();
 	end
 
 	// Test SUB
-	IR = 16'h43AF; wait(State_Out == 4'h6); #20;
+	IR = 16'h43AF; wait(OutState == 4'h6); #20;
 	assert(ALU_s0 == 3'd2 && RF_W_en == 1'b1 && RF_W_addr == IR[3:0] && RF_Ra_addr == IR[11:8] && RF_Rb_addr == IR[7:4]) begin
     $display("SUB is successful, RF_W_addr = %b, RF_Ra_addr = %b, RF_Rb_addr = %b", RF_W_addr, RF_Ra_addr, RF_Rb_addr);
 	end else begin
@@ -198,7 +202,7 @@ module FSM_tb();
 	end
 
 	// Test NOOP
-	IR = 16'h0234; wait(State_Out == 4'h8); #20;
+	IR = 16'h0234; wait(OutState == 4'h8); #20;
 	assert(RF_W_en == 1'b0 && D_Addr == 8'd0 && ALU_s0 == 3'd0) begin
    	$display("NOOP is successful no changes occurred");
 	end else begin
@@ -206,8 +210,8 @@ module FSM_tb();
 	end
 	
 	// Test Halt
-	IR = 16'h5234; wait(State_Out == 4'h9); #20;
-	assert(State_Out == 4'h9 && PC_up == 0 && IR_ld == 0 && RF_W_en == 0 && D_wr == 0) begin
+	IR = 16'h5234; wait(OutState == 4'h9); #20;
+	assert(OutState == 4'h9 && PC_up == 0 && IR_ld == 0 && RF_W_en == 0 && D_wr == 0) begin
     $display("HALT is successful, FSM stayed in HALT and signals are low");
     end else begin
     $display("HALT FAILED");
