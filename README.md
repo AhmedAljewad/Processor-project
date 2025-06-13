@@ -63,47 +63,44 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 ![Detailed Processor Block Diagram](https://github.com/user-attachments/assets/d12006e1-3b33-4bb7-9563-1707fff4ea2a)
 
 ## Project Structure
-processor-project
-│
-├── processor/                      # Final processor and support modules
-│   ├── alu.sv
-│   ├── buttonsync.sv
-│   ├── controlunit.sv
-│   ├── datapath.sv
-│   ├── decoder.sv
-│   ├── dmif.mif
-│   ├── fsm.sv
-│   ├── imif.mif
-│   ├── IR.sv
-│   ├── keyfilter.sv
-│   ├── mux2to1.sv
-│   ├── mux16w8to1.sv
-│   ├── PC.sv
-│   ├── processor.sv
-│   ├── ram.v
-│   ├── registerfile.sv
-│   ├── rom.v
-│   └── testprocessor.sv           # Standalone testbench for full processor
-│
-├── TestControlUnit/               # Unit testing of control-related modules
-│   ├── Full Control Unit/         # Full control unit and testbench
-│   │   └── controlunit.sv         # (contains control + testbench)
-│   ├── fsm/                       # FSM + FSM TB
-│   │   └── fsm.sv
-│   ├── IR/                        # Instruction Register + TB
-│   │   └── IR.sv
-│   └── PC/                        # Program Counter + TB
-│       └── PC.sv
-│
-├── TestDatapath/                  # Unit testing of datapath components
-│   ├── Full Datapath/             # Full datapath test
-│   │   └── datapath.sv
-│   ├── RegALU/                    # ALU + Register File testing
-│   │   └── RegAlU.sv              # Contains both modules + TB
-│   ├── RegisterFile/              # Register File testing
-│   │   └── RegisterFile.sv
-│   └── RegRAM/                    # RF + RAM test
-│       └── RegRam.sv
+processor-project/
+├── processor/ # Final processor and support modules
+│ ├── alu.sv
+│ ├── buttonsync.sv
+│ ├── controlunit.sv
+│ ├── datapath.sv
+│ ├── decoder.sv
+│ ├── dmif.mif
+│ ├── fsm.sv
+│ ├── imif.mif
+│ ├── IR.sv
+│ ├── keyfilter.sv
+│ ├── mux2to1.sv
+│ ├── mux16w8to1.sv
+│ ├── PC.sv
+│ ├── processor.sv
+│ ├── ram.v
+│ ├── registerfile.sv
+│ ├── rom.v
+│ └── testprocessor.sv # Standalone testbench for full processor
+├── TestControlUnit/ # Unit testing of control-related modules
+│ ├── Full Control Unit/ # Full control unit and testbench
+│ │ └── controlunit.sv
+│ ├── fsm/ # FSM + FSM TB
+│ │ └── fsm.sv
+│ ├── IR/ # Instruction Register + TB
+│ │ └── IR.sv
+│ └── PC/ # Program Counter + TB
+│ └── PC.sv
+└── TestDatapath/ # Unit testing of datapath components
+├── Full Datapath/ # Full datapath test
+│ └── datapath.sv
+├── RegALU/ # ALU + Register File testing
+│ └── RegAlU.sv # Contains both modules + TB
+├── RegisterFile/ # Register File testing
+│ └── RegisterFile.sv
+└── RegRAM/ # RF + RAM test
+└── RegRam.sv
 
 ## Getting Started
 
