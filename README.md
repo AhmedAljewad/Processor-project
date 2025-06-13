@@ -66,7 +66,6 @@ This modular separation and clear control flow enable easy debugging, maintenanc
 processor-project/
 ├── processor/ # Final processor and support modules
 │ ├── alu.sv
-
 │ ├── buttonsync.sv
 │ ├── controlunit.sv
 │ ├── datapath.sv
@@ -102,7 +101,6 @@ processor-project/
 │ └── RegisterFile.sv
 └── RegRAM/ # RF + RAM test
 └── RegRam.sv
-
 ## Getting Started
 
 ### Prerequisites
